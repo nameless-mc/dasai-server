@@ -24,8 +24,8 @@ router.get(
     const questionGroup = await getQuestionGroup(
       req.params.questionGroupId
     ).catch(next);
-    if (questionGroup) {
-      return notFoundException();
+    if (!questionGroup) {
+      return next(notFoundException());
     }
     const questions = await connection()
       .then((c) => {
@@ -50,8 +50,8 @@ router.put(
     const questionGroup = await getQuestionGroup(
       req.params.questionGroupId
     ).catch(next);
-    if (questionGroup) {
-      return notFoundException();
+    if (!questionGroup) {
+      return next(notFoundException());
     }
     const firstQuestionlist = await connection()
       .then((c) => {
@@ -73,11 +73,8 @@ router.put(
     await connection()
       .then((c) => {
         c.query(
-          "insert into user_answers(id, question_group_id) values (" +
-            userAnswerId +
-            ", " +
-            questionGroup.id +
-            ")"
+          "insert into user_answers(id, question_group_id) values (?, ?)",
+          [userAnswerId, questionGroup.id]
         );
       })
       .catch(next);
@@ -106,11 +103,11 @@ router.post(
       })
       .catch(next);
     if (!answer_results || answer_results.length == 0) {
-      return notFoundException();
+      return next(notFoundException());
     }
     const question = await getQuestion(questionGroupId, questionId).catch(next);
     if (!question) {
-      return notFoundException();
+      return next(notFoundException());
     }
     const userAnswer = await connection()
       .then((c) => {
@@ -120,18 +117,13 @@ router.post(
       })
       .catch(next);
     if (!userAnswer) {
-      return notFoundException();
+      return next(notFoundException());
     }
     await connection()
       .then((c) => {
         c.query(
-          "insert into user_question_answers(user_answer_id, question_id, answer_id, text) values (" +
-            userAnswerId +
-            ", " +
-            questionId +
-            ", " +
-            answerId +
-            ")"
+          "insert into user_question_answers(user_answer_id, question_id, answer_id, text) values (?, ?, ?, null)",
+          [userAnswerId, questionId, answerId]
         );
       })
       .catch(next);

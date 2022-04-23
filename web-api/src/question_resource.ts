@@ -12,9 +12,9 @@ router.get(
       req.params.questionId
     ).catch(next);
     if (!question) {
-      return notFoundException();
+      return next(notFoundException());
     }
-    question.answers = getAnswers(question.id).catch(next);
+    question.answers = await getAnswers(question.id).catch(next);
     res.send(question);
   }
 );
