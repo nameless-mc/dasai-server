@@ -1,0 +1,15 @@
+services:
+  dassai-db:
+    image: mysql:8.0
+    platform: linux/x86_64
+    volumes:
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=dassai
+      - MYSQL_USER=dassai
+      - MYSQL_PASSWORD=dassai
+      - TZ=Asia/Tokyo
+    ports:
+      - 3306:3306
