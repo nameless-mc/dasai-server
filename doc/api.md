@@ -179,7 +179,7 @@ POST /api/question_groups/{QUESTION_GROUP_ID}/answer
 ```javascript
 {
     user_answer_id: number,
-    question_id: number,
+    question_group_id: number,
     question: {
         text: string,
         id: number,

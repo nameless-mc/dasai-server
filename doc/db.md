@@ -37,3 +37,7 @@ pk id
 f question_group_id
 text
 redirect_url
+
+## first_questions
+pk f question_group_id
+pk f question_id

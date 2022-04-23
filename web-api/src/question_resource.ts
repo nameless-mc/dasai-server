@@ -1,37 +1,20 @@
 import express from "express";
-import connection from "./db";
 import { notFoundException } from "./error";
+import { getAnswers, getQuestion } from "./query";
 
 const router = express.Router();
 
 router.get(
-  "/:questionId",
+  "/:questionGroupId/questions/:questionId",
   async (req: express.Request, res: express.Response, next) => {
-    const questions = await connection()
-      .then((c) => {
-        return c.query(
-          "SELECT id, text, type from questions as q " +
-            "where q.question_group_id = " +
-            req.params.questionGroupId +
-            " and q.id = " +
-            req.params.questionId
-        );
-      })
-      .catch(next);
-    if (questions.length == 0) {
-      return next(notFoundException());
+    const question = await getQuestion(
+      req.params.questionGroupId,
+      req.params.questionId
+    ).catch(next);
+    if (!question) {
+      return notFoundException();
     }
-    const question = questions[0];
-    const answers = await connection()
-      .then((c) => {
-        return c.query(
-          "SELECT id, text from answers as a " +
-            "where a.question_id = " +
-            question.id
-        );
-      })
-      .catch(next);
-    question.answers = answers;
+    question.answers = getAnswers(question.id).catch(next);
     res.send(question);
   }
 );

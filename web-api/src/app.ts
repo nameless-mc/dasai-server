@@ -23,6 +23,6 @@ app.listen(config.port, () => {
 
 app.use("/api/question_groups", questionGroupResource);
 
-app.use("/api/question_groups/:questionGroupId/questions", questionResource);
+app.use("/api/question_groups", questionResource);
 
 app.use(errorHandler);
