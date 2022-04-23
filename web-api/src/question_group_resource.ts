@@ -1,6 +1,5 @@
-import { randomUUID } from "crypto";
 import express from "express";
-import connection from "./db";
+import connection, { idgen } from "./db";
 import { notFoundException } from "./error";
 import { getAnswers, getQuestion, getQuestionGroup } from "./query";
 
@@ -69,7 +68,7 @@ router.put(
     }
     const firstQuestion = firstQuestionlist[0];
     firstQuestion.answers = await getAnswers(firstQuestion.id).catch(next);
-    const userAnswerId = randomUUID();
+    const userAnswerId = idgen();
     await connection()
       .then((c) => {
         c.query(
@@ -79,7 +78,7 @@ router.put(
       })
       .catch(next);
     res.send({
-      user_answer_id: userAnswerId,
+      user_answer_id: parseInt(userAnswerId),
       question_group_id: questionGroup.id,
       question: firstQuestion,
     });
