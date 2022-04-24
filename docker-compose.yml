@@ -1,10 +1,26 @@
+version: "3"
 services:
-  dassai-db:
+  web:
+    build: ./web-api
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=dassai
+      - DB_PASSWORD=dassai
+      - DB_DATABASE=dassai
+    depends_on:
+      - db
+    networks:
+      - dassai-network
+  db:
     image: mysql:8.0
     platform: linux/x86_64
     volumes:
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/db/initdb.d:/docker-entrypoint-initdb.d
+      - ./docker/db/data:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_DATABASE=dassai
@@ -13,3 +29,9 @@ services:
       - TZ=Asia/Tokyo
     ports:
       - 3306:3306
+    networks:
+      - dassai-network
+
+networks:
+  dassai-network:
+    driver: bridge

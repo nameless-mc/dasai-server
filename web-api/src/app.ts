@@ -1,5 +1,8 @@
 import express from "express";
-import users from "./user";
+import config from "./config";
+import errorHandler from "./error";
+import questionGroupResource from "./question_group_resource";
+import questionResource from "./question_resource";
 const app: express.Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,11 +17,12 @@ app.use(
   }
 );
 
-app.listen(3000, () => {
+app.listen(config.port, () => {
   console.log("Start on port 3000.");
 });
 
-// 一覧取得
-app.get("/users", (req: express.Request, res: express.Response) => {
-  res.send(JSON.stringify(users));
-});
+app.use("/api/question_groups", questionGroupResource);
+
+app.use("/api/question_groups", questionResource);
+
+app.use(errorHandler);
