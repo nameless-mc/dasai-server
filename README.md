@@ -7,10 +7,6 @@
 - [API ドキュメント](./doc/api.md)
 - [オブジェクト定義](./doc/object.md)
 
-# DB
-
-![er図](./doc/data/dassai_er_diagram.png)
-
 # 起動方法
 
 ```
@@ -34,3 +30,11 @@ npm cdk deploy --all
 ※デプロイ後EC2インスタンスが起動状態になるので注意
 
 その後ec2内でこのブランチをクローン & 起動
+
+# DB
+
+![er図](./doc/data/dassai_er_diagram.png)
+
+# ネットワーク
+
+![ネットワーク図](./doc/data/dassai_network.png)
