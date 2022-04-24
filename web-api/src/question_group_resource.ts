@@ -1,6 +1,6 @@
 import express from "express";
 import connection, { idgen } from "./db";
-import { notFoundException } from "./error";
+import { badRequestException, notFoundException } from "./error";
 import { getAnswers, getQuestion, getQuestionGroup } from "./query";
 
 const router = express.Router();
@@ -104,6 +104,7 @@ router.post(
     if (!answer_results || answer_results.length == 0) {
       return next(notFoundException());
     }
+    const answerResult = answer_results[0];
     const question = await getQuestion(questionGroupId, questionId).catch(next);
     if (!question) {
       return next(notFoundException());
@@ -126,23 +127,24 @@ router.post(
         );
       })
       .catch(next);
-    if (answer_results.question_result_id) {
+
+    if (answerResult.question_result_id) {
       const questionGroupResults = await connection().then((c) => {
         return c.query(
           "select * from question_group_results as qgr" +
             " where qgr.id = " +
-            answer_results.question_result_id
+            answerResult.question_result_id
         );
       });
       if (!questionGroupResults || questionGroupResults.length == 0) {
         return next();
       }
-      res.redirect(questionGroupResults[0].redirect_url);
+      res.send(questionGroupResults[0]);
       return;
-    } else if (answer_results.next_question_id) {
+    } else if (answerResult.next_question_id) {
       const nextQuestion = await getQuestion(
         questionGroupId,
-        answer_results.next_question_id
+        answerResult.next_question_id
       ).catch(next);
       nextQuestion.answers = await getAnswers(nextQuestion.id).catch(next);
       res.send({
@@ -150,6 +152,9 @@ router.post(
         question_group_id: questionGroupId,
         question: nextQuestion,
       });
+      return;
+    } else {
+      return next(badRequestException());
     }
   }
 );
