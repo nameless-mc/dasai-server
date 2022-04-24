@@ -1,0 +1,48 @@
+/usr/sbin/mysqld, Version: 8.0.28 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2022-04-24T03:49:25.430641Z	   22 Quit	
+2022-04-24T03:51:23.602463Z	   23 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:51:23.617576Z	   23 Query	select * from answer_results as ar where ar.answer_id = 5343290
+2022-04-24T03:51:23.626299Z	   24 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:51:23.629713Z	   24 Query	SELECT id, text, type from questions as q where q.question_group_id = 5240916 and q.id = 5288827
+2022-04-24T03:51:23.636634Z	   25 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:51:23.638671Z	   25 Query	select * from user_answers as ua where ua.id = 390312
+2022-04-24T03:51:23.644391Z	   26 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:51:23.646671Z	   26 Query	insert into user_question_answers(user_answer_id, question_id, answer_id, text) values ('390312', '5288827', '5343290', null)
+2022-04-24T03:52:39.127056Z	   27 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:39.130213Z	   27 Query	SELECT * FROM question_groups as qg where qg.id = 5240916
+2022-04-24T03:52:39.138775Z	   28 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:39.142060Z	   28 Query	SELECT q.text as text, q.id as id FROM first_questions as fq left join questions as q on fq.question_id = q.id left join question_groups as qg on fq.question_group_id = qg.id where qg.id = 5240916
+2022-04-24T03:52:39.151648Z	   29 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:39.154376Z	   29 Query	SELECT id, text from answers as a where a.question_id = 5288827
+2022-04-24T03:52:39.161042Z	   30 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:39.163661Z	   30 Query	insert into user_answers(id, question_group_id) values ('9158503', 5240916)
+2022-04-24T03:52:52.902351Z	   31 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:52.906300Z	   31 Query	select * from answer_results as ar where ar.answer_id = 5343290
+2022-04-24T03:52:52.922609Z	   32 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:52.927843Z	   32 Query	SELECT id, text, type from questions as q where q.question_group_id = 5240916 and q.id = 5288827
+2022-04-24T03:52:52.936510Z	   33 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:52.939984Z	   33 Query	select * from user_answers as ua where ua.id = 9158503
+2022-04-24T03:52:52.946868Z	   34 Connect	dassai@172.26.0.3 on dassai using TCP/IP
+2022-04-24T03:52:52.949950Z	   34 Query	insert into user_question_answers(user_answer_id, question_id, answer_id, text) values ('9158503', '5288827', '5343290', null)
+2022-04-24T03:55:13.545699Z	   20 Query	insert into dassai.user_question_answers(user_answer_id, question_id, answer_id, text) values ('9158503', '5288827', '5343290', null)
+2022-04-24T03:56:11.670346Z	   20 Query	select * from dassai.user_question_answers
+LIMIT 0, 1000
+2022-04-24T03:56:11.682727Z	   21 Query	SELECT st.* FROM performance_schema.events_statements_current st JOIN performance_schema.threads thr ON thr.thread_id = st.thread_id WHERE thr.processlist_id = 20
+2022-04-24T03:56:11.689376Z	   21 Query	SELECT st.* FROM performance_schema.events_stages_history_long st WHERE st.nesting_event_id = 22
+2022-04-24T03:56:11.694224Z	   21 Query	SELECT st.* FROM performance_schema.events_waits_history_long st WHERE st.nesting_event_id = 22
+2022-04-24T03:56:11.698705Z	   21 Query	SHOW INDEX FROM `dassai`.`user_question_answers`
+2022-04-24T03:56:21.297475Z	   21 Query	SHOW FULL TABLES FROM `dassai`
+2022-04-24T03:56:21.322849Z	   21 Query	SHOW PROCEDURE STATUS WHERE Db='dassai'
+2022-04-24T03:56:21.368099Z	   21 Query	SHOW FUNCTION STATUS WHERE Db='dassai'
+2022-04-24T03:56:21.375958Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`answer_results`
+2022-04-24T03:56:21.389231Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`answers`
+2022-04-24T03:56:21.395800Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`first_questions`
+2022-04-24T03:56:21.402086Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`question_group_results`
+2022-04-24T03:56:21.408103Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`question_groups`
+2022-04-24T03:56:21.414142Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`questions`
+2022-04-24T03:56:21.421179Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`user_answers`
+2022-04-24T03:56:21.427324Z	   20 Query	SHOW FULL COLUMNS FROM `dassai`.`user_question_answers`
+2022-04-24T03:56:25.836155Z	   21 Query	SHOW FULL COLUMNS FROM `dassai`.`user_question_answers`
+2022-04-24T03:56:25.866119Z	   21 Query	SHOW INDEXES FROM `dassai`.`user_question_answers`

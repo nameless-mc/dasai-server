@@ -11,5 +11,3 @@ cdk.context.json
 */environment.ts
 
 .vscode
-
-docker/db/data
